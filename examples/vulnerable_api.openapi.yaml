@@ -1,0 +1,65 @@
+openapi: 3.0.3
+info:
+  title: Vulnerable API (gatecrash demo)
+  version: "1.0"
+servers:
+  - url: http://127.0.0.1:5099
+security:
+  - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+paths:
+  /api/login:
+    post:
+      operationId: login
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username: { type: string, example: alice }
+                password: { type: string, example: Password123 }
+      responses: { "200": { description: ok } }
+  /api/me:
+    get:
+      operationId: currentUser
+      responses: { "200": { description: ok } }
+  /api/users/{userId}:
+    get:
+      operationId: getUser
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema: { type: string, example: "1001" }
+      responses: { "200": { description: ok } }
+  /api/users:
+    post:
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username: { type: string, example: dave }
+                email: { type: string, format: email }
+      responses: { "201": { description: created } }
+  /api/admin/users:
+    get:
+      operationId: adminListUsers
+      responses: { "200": { description: ok } }
+  /api/orders:
+    get:
+      operationId: listOrders
+      responses: { "200": { description: ok } }
+  /api/reports/export:
+    get:
+      operationId: exportReport
+      responses: { "200": { description: ok } }

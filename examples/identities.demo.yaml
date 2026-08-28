@@ -1,0 +1,32 @@
+# Demo identities for examples/vulnerable_api.py
+# Note the admin identity and 'primary: admin' - that privilege gradient is what
+# makes the API5 (function level authorisation) checks meaningful.
+scope:
+  - 127.0.0.1
+
+primary: admin
+
+identities:
+  - name: admin
+    role: admin
+    description: Carol - administrator
+    headers:
+      Authorization: "Bearer ${ADMIN_TOKEN}"
+    owns: ["1003"]
+
+  - name: userA
+    role: user
+    description: Alice - tenant 1
+    headers:
+      Authorization: "Bearer ${USER_A_TOKEN}"
+    owns: ["1001"]
+
+  - name: userB
+    role: user
+    description: Bob - tenant 2
+    headers:
+      Authorization: "Bearer ${USER_B_TOKEN}"
+    owns: ["1002"]
+
+  - name: anonymous
+    role: anonymous
